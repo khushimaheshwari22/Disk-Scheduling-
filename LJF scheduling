@@ -1,0 +1,139 @@
+#include<iostream.h>
+#include<conio.h>
+#include<stdio.h>
+int i,no;
+int p_no[20];
+class sjf{
+public:
+int bt[10],wt[10],tp[10];
+float sum_wt,sum_tp;
+float av_wt,av_tp;
+sjf()
+{
+sum_wt=0;
+sum_tp=0;
+}
+void init();
+void input_burst();
+void input_waiting();
+void input_turn();
+void average();
+void output();
+void sort();
+};
+void main()
+{
+clrscr();
+sjf s;
+l:s.init();
+if(no > 0)
+{
+s.input_burst();
+s.sort();
+s.input_waiting();
+s.input_turn();
+s.average();
+s.output();
+}
+else
+{
+cout<<"Enter a valid positive number!!";
+cout<<"\n";
+getch();
+clrscr();
+goto l;
+}
+getch();
+}
+void sjf::sort()
+{
+int j;
+int temp,temp1;
+for (i=1;i<=no;i++)
+{
+int max = bt[i];
+int max1=p_no[i];
+int maxId = i;
+for (j = i+1; j<=no; j++)
+{
+if (bt[j] > max)
+{
+max = bt[j];
+maxId = j;
+max1=j;
+}
+}
+temp = bt[i];
+bt[i] = max;
+bt[maxId] = temp;
+temp1 = p_no[i];
+p_no[i] = max1;
+p_no[maxId] = temp1;
+
+}
+}
+void sjf::input_burst()
+{
+for(i=1;i<=no;++i)
+{
+l1:cout<<"Enter Burst time for Process "<<i<<"(in sec): ";
+cin>>bt[i];
+if(bt[i]<0)
+{
+cout<<"Invalid time! Re-enter:\n";
+goto l1;
+}
+p_no[i]=i;
+}
+cout<<"\n***************************\n";
+}
+
+
+void sjf::init()
+{
+cout<<"Enter number of Process(in real numbers): ";
+cin>>no;
+cout<<"\n***************************\n";
+}
+void sjf::input_waiting()
+{
+wt[1]=0;
+for(i=2;i<=no;++i)
+{
+wt[i]=wt[i-1]+bt[i-1];
+}
+}
+void sjf::input_turn()
+{
+for(i=1;i<=no;++i)
+{
+tp[i]=wt[i]+bt[i];
+}
+}
+void sjf::average()
+{
+for(i=1;i<=no;++i)
+{
+sum_wt=sum_wt+wt[i];
+sum_tp=sum_tp+tp[i];
+}
+av_wt=(float)(sum_wt/no);
+av_tp=(float)(sum_tp/no);
+}
+void sjf::output()
+{
+cout<<"Process no   Burst time(sec)\tWaiting time(sec)   Turnaround time(sec)\n";
+for(i=1;i<=no;++i)
+{
+cout<<"   "<<p_no[i]<<"\t\t  "<<bt[i]<<"\t\t    "<<wt[i]<<"\t\t\t   "<<tp[i]<<"\n";
+}
+cout<<"\n***************************\n";
+cout<<"Waiting time of current process = \nwaiting time of previous process + burst time of previous process\n";
+cout<<"Average waiting time = \nSum of all waiting time / Total no of process\n";
+cout<<"Average Waiting time: "<<av_wt<<" sec\n";
+cout<<"\n***************************\n";
+cout<<"Turnaround time of current process = \nwaiting time of current process + burst time of current process\n";
+cout<<"Average Turnaround time = \nSum of all Turnaround time / Total no of process\n";
+cout<<"Average Turnaround time: "<<av_tp<<" sec";
+cout<<"\n***************************\n";
+}
