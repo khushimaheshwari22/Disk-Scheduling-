@@ -1,0 +1,52 @@
+package sequential;
+import java.util.Scanner;
+class Extra{
+    public int [] sa = new int [10];
+    public String [] fname= new String [10];
+    public int [] block = new int [10];
+    public int [] finale = new int [10];
+    public String search;
+}
+  public class Sequential {
+    public static void main(String[] args) {
+        int i;
+        int count=0;
+        Extra e1= new Extra();
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter number of files:");
+        int no = in.nextInt();
+        for(i=1;i<=no;++i)
+        {
+           System.out.println("Enter File "+ i +" name :");
+           e1.fname[i] = in.next();
+           System.out.println("Enter File "+ i +" starting location :");
+           e1.sa[i] = in.nextInt();
+           System.out.println("Enter File Size(in blocks) :");
+           e1.block[i] = in.nextInt();
+           e1.finale[i] = e1.sa[i] + e1.block[i];
+        }
+        System.out.println("Enter File name which you want to view");
+        e1.search = in.next();
+        for(i=1;i<=no;++i)
+        {
+            if(e1.search.equals(e1.fname[i]))
+            {
+             count =1;
+             break;
+            }
+        }
+        if(count ==1)
+        {
+          System.out.println("File name:"+e1.fname[i]);  
+              System.out.println("Location of the file:");
+ for (int j= e1.sa[i] ; j< e1.finale[i];++j)
+              {
+               System.out.println(j +"  ");   
+              }  
+        }
+        else
+        {
+          System.out.println("File Not Found");   
+        }
+    }
+}
