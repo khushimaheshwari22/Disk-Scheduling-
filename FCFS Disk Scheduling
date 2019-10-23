@@ -1,0 +1,27 @@
+#include<iostream.h>
+#include<conio.h>
+void main()
+{
+ int i,j,sum=0,n;
+ int ar[20],tm[20];
+ int disk;
+ clrscr();
+ cout<<"enter number of location:";
+ cin>>n;
+ cout<<"enter position of head:";
+ cin>>disk;
+ cout<<"enter elements of disk queue:\n";
+ for(i=0;i<n;i++)
+ {
+ cin>>ar[i];
+ tm[i]=disk-ar[i];
+ if(tm[i]<0)
+ {
+ tm[i]=ar[i]-disk;
+ }
+ disk=ar[i];
+ sum=sum+tm[i];
+ }
+ cout<<"\nTotal movements : "<<sum;
+ getch();
+}
