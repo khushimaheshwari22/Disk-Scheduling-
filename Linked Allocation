@@ -1,0 +1,69 @@
+#include<stdio.h>
+#include<alloc.h>
+#include<string.h>
+#include<conio.h>
+struct filetable
+{
+char name[30];
+int nob;
+struct block *sb;
+}f[30];
+struct block
+{
+int bno;
+struct block *next;
+};
+void main()
+{
+clrscr();
+int i,j,n;
+char s[20];
+struct block *temp;
+clrscr();
+printf("\nEnter number of files: ");
+scanf("%d",&n);
+for(i=0;i<n;++i)
+{
+printf("\nEnter file name %d: ",i+1);
+scanf("%s",f[i].name);
+printf("\nEnter number of blocks: ");
+scanf("%d",&f[i].nob);
+f[i].sb=(struct block *)malloc(sizeof(struct block));
+temp=f[i].sb;
+printf("\nEnter the blocks of the file :");
+scanf("%d",&temp->bno);
+temp->next=NULL;
+for(j=1;j<f[i].nob;++j)
+{
+temp->next=(struct block *)malloc(sizeof(struct block));
+temp=temp->next;
+scanf("%d",&temp->bno);
+}
+temp->next=NULL;
+}
+printf("\nEnter the file name to be searched: ");
+scanf("%s",s);
+for(i=0;i<n;++i)
+{
+if(strcmp(s,f[i].name)==0)
+break;
+}
+if(i==n)
+printf("\nFile not found!");
+else
+{
+printf("\n******************************\n");
+printf("\nFILE NAME \t NO OF BLOCKS \t BLOCKS OCCUPIED");
+printf("\n %s\t\t     %d\t \t",f[i].name,f[i].nob);
+temp=f[i].sb;
+for(j=0;j<f[i].nob;++j)
+{
+if(temp->next==NULL)
+printf("%d",temp->bno);
+else
+printf("%d->",temp->bno);
+temp=temp->next;
+}
+}
+getch( );
+}
