@@ -1,0 +1,84 @@
+#include<stdio.h>
+#include<conio.h>
+#define max 30
+int ch;
+int choice=1;
+int bf[max],ff[max],lowest=10000;
+int frag[max],block[max],file[max],i,j,nb,nf,temp;
+void first_fit(int,int,int[],int[]);
+void best_fit(int,int,int[],int[]);
+void output();
+void main()
+{
+clrscr();
+while(choice==1)
+{
+printf("\nEnter the number of blocks:");
+scanf("%d",&nb);
+printf("\nEnter the number of files:");
+scanf("%d",&nf);
+printf("\nEnter the size of blocks:");
+for(i=1;i<=nb;++i)
+scanf("%d",&block[i]);
+printf("\nEnter the size of files:");
+for(i=1;i<=nf;++i)
+scanf("%d",&file[i]);
+printf("\nMemory management techniques are:\n");
+printf("\n1.First-Fit\n2.Best-Fit\nEnter your choice:");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1: first_fit(nb,nf,block,file);
+	break;
+case 2: best_fit(nb,nf,block,file);
+	break;
+default : printf("\nEnter a valid choice");
+}
+output();
+printf("\nDo you want to continue?\nPress\n1 for yes\n2 for no\nEnter your choice:");
+scanf("%d",&choice);
+}
+}
+void first_fit(int nb,int nf,int block[],int file[])
+{
+for(i=1;i<=nf;++i)
+{
+for(j=1;j<=nb;++j)
+{
+if(bf[j]!=1)
+{
+temp=block[j]-file[i];
+if(temp>=0)
+{
+ff[i]=j;
+break;
+}}}
+frag[i]=temp;
+bf[ff[i]]=1;
+}}
+void best_fit(int nb,int nf,int block[],int file[])
+{
+for(i=1;i<=nf;++i)
+{
+for(j=1;j<=nb;++j)
+{
+if(bf[j]!=1)
+{
+temp=block[j]-file[i];
+if(temp>=0)
+if(lowest>temp)
+{
+ff[i]=j;
+lowest=temp;
+}}}
+frag[i]=lowest;
+bf[ff[i]]=1;
+lowest=10000;
+}}
+void output()
+{
+printf("\nFile No\tFile size\tBlock No\tBlock Size\tFragment");
+for(i=1;i<=nf&&ff[i]!=0;++i)
+printf("\n%d\t\t%d\t\t%d\t\t%d\t\t%d",i,file[i],ff[i],block[ff[i]],frag[i]);
+getch();
+}
